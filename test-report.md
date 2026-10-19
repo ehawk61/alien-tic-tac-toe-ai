@@ -4,38 +4,38 @@ Each check comes from "Completion checks" in `game-rules.md`.
 Result is one of: **Passed**, **Failed**, **Not tested**.
 "Checked by" says who ran it: Claude (automated) or you (in the browser).
 
-Last updated: 2026-10-19. The game hasn't been built yet, so nothing has been tested.
+Last updated: 2026-10-19. The game (`index.html`) is built. The 28 checks below were run automatically by Claude; your browser checks for the game are in the "Full game" section further down.
 
 | # | Check | Result | Checked by | Date | Notes |
 |---|---|---|---|---|---|
-| 1 | Double-clicking `index.html` opens the game with no internet connection. | Not tested | | | |
-| 2 | First load: instructions, 9 empty cells, "Restart game" visible, no reply buttons active. | Not tested | | | |
-| 3 | No sound and no countdown or timer anywhere. | Not tested | | | |
-| 4 | Selecting an empty cell highlights it, shows health 2 for both and alien move "Laser". | Not tested | | | |
-| 5 | During a battle, selecting any cell does nothing. | Not tested | | | |
-| 6 | A cell with X or O can't be selected. | Not tested | | | |
-| 7 | Alien moves appear in the order Laser, Shield, Claw. | Not tested | | | |
-| 8 | Shield to Laser, Blast to Shield, Dodge to Claw lowers alien health by 1. | Not tested | | | |
-| 9 | Any other reply lowers player health by 1. | Not tested | | | |
-| 10 | After a reply, reply buttons are disabled and repeat presses change nothing. | Not tested | | | |
-| 11 | "Next exchange" appears only when both health values are above 0. | Not tested | | | |
-| 12 | At 0 health the battle ends at once with no "Next exchange". | Not tested | | | |
-| 13 | Three correct replies in a row: cell gets X. | Not tested | | | |
-| 14 | Two wrong replies in a row: cell gets O. | Not tested | | | |
-| 15 | After a battle (game not over) the board unlocks; the next battle starts at health 2 each with "Laser". | Not tested | | | |
-| 16 | No O ever appears except from a lost battle. | Not tested | | | |
-| 17 | Three X in each of the 8 lines shows "You win". | Not tested | | | |
-| 18 | Three O in a line shows "You lose". | Not tested | | | |
-| 19 | Nine marks with no line shows "Draw". | Not tested | | | |
-| 20 | A 9th mark that completes a line shows win or lose, not draw. | Not tested | | | |
-| 21 | After a win, loss or draw, no cell can be selected. | Not tested | | | |
-| 22 | "Restart game" is visible in every state. | Not tested | | | |
-| 23 | "Restart game" at any point empties the board, clears health and messages, shows instructions. | Not tested | | | |
-| 24 | The whole game can be played with only Tab, Shift+Tab, Enter and Space. | Not tested | | | |
-| 25 | Focus moves as listed in Keyboard behavior; focus outline always visible. | Not tested | | | |
-| 26 | At 360 pixels wide everything fits with no sideways scrolling. | Not tested | | | |
-| 27 | The whole game can be played to a result by tapping. | Not tested | | | |
-| 28 | One game file, `index.html`, with no links to other websites. | Not tested | | | |
+| 1 | Double-clicking `index.html` opens the game with no internet connection. | Passed | Claude (automated) | 2026-10-19 | Opened from disk with the browser set to offline. |
+| 2 | First load: instructions, 9 empty cells, "Restart game" visible, no reply buttons active. | Passed | Claude (automated) | 2026-10-19 |  |
+| 3 | No sound and no countdown or timer anywhere. | Passed | Claude (automated) | 2026-10-19 | Checked the code for timers and sound. |
+| 4 | Selecting an empty cell highlights it, shows health 2 for both and alien move "Laser". | Passed | Claude (automated) | 2026-10-19 |  |
+| 5 | During a battle, selecting any cell does nothing. | Passed | Claude (automated) | 2026-10-19 |  |
+| 6 | A cell with X or O can't be selected. | Passed | Claude (automated) | 2026-10-19 |  |
+| 7 | Alien moves appear in the order Laser, Shield, Claw. | Passed | Claude (automated) | 2026-10-19 | All 17 possible battles played step by step (5 won, 12 lost). |
+| 8 | Shield to Laser, Blast to Shield, Dodge to Claw lowers alien health by 1. | Passed | Claude (automated) | 2026-10-19 | All 17 possible battles played step by step. |
+| 9 | Any other reply lowers player health by 1. | Passed | Claude (automated) | 2026-10-19 | All 17 possible battles played step by step. |
+| 10 | After a reply, reply buttons are disabled and repeat presses change nothing. | Passed | Claude (automated) | 2026-10-19 | Also checked after every reply in all 17 battles. |
+| 11 | "Next exchange" appears only when both health values are above 0. | Passed | Claude (automated) | 2026-10-19 | All 17 possible battles played step by step. |
+| 12 | At 0 health the battle ends at once with no "Next exchange". | Passed | Claude (automated) | 2026-10-19 | All 17 possible battles played step by step. |
+| 13 | Three correct replies in a row: cell gets X. | Passed | Claude (automated) | 2026-10-19 | Wording issue: two correct replies already win, since the alien has only 2 health. Tested as 'winning the battle gives X'. |
+| 14 | Two wrong replies in a row: cell gets O. | Passed | Claude (automated) | 2026-10-19 |  |
+| 15 | After a battle (game not over) the board unlocks; the next battle starts at health 2 each with "Laser". | Passed | Claude (automated) | 2026-10-19 |  |
+| 16 | No O ever appears except from a lost battle. | Passed | Claude (automated) | 2026-10-19 | The alien never places a mark on its own. |
+| 17 | Three X in each of the 8 lines shows "You win". | Passed | Claude (automated) | 2026-10-19 | All 8 lines checked. |
+| 18 | Three O in a line shows "You lose". | Passed | Claude (automated) | 2026-10-19 | All 8 lines checked. |
+| 19 | Nine marks with no line shows "Draw". | Passed | Claude (automated) | 2026-10-19 |  |
+| 20 | A 9th mark that completes a line shows win or lose, not draw. | Passed | Claude (automated) | 2026-10-19 |  |
+| 21 | After a win, loss or draw, no cell can be selected. | Passed | Claude (automated) | 2026-10-19 | Checked after a win, a loss and a draw. |
+| 22 | "Restart game" is visible in every state. | Passed | Claude (automated) | 2026-10-19 | Checked in instructions, choose response, exchange feedback, battle finished and board finished. |
+| 23 | "Restart game" at any point empties the board, clears health and messages, shows instructions. | Passed | Claude (automated) | 2026-10-19 | Checked mid-battle, after feedback, after a battle and after a game result. |
+| 24 | The whole game can be played with only Tab, Shift+Tab, Enter and Space. | Passed | Claude (automated) | 2026-10-19 | Played three battles to a win. |
+| 25 | Focus moves as listed in Keyboard behavior; focus outline always visible. | Passed | Claude (automated) | 2026-10-19 | Outline checked at every step. |
+| 26 | At 360 pixels wide everything fits with no sideways scrolling. | Passed | Claude (automated) | 2026-10-19 | Smallest button 44 px. On the first screen the instructions push the board partly below the bottom of a 740 px tall phone screen, so you scroll down; no sideways scrolling. |
+| 27 | The whole game can be played to a result by tapping. | Passed | Claude (automated) | 2026-10-19 | Simulated taps, not a real phone. |
+| 28 | One game file, `index.html`, with no links to other websites. | Passed | Claude (automated) | 2026-10-19 | Prototype folders are separate test files, not part of the game. |
 
 ## Board prototype (`prototype-board/index.html`)
 This is a temporary prototype, not the final game, so its results don't count toward the 28 checks above.
@@ -105,3 +105,17 @@ Run on 2026-10-19 in a headless Chromium browser (Playwright), against the file 
 | C5 | After a reply, clicking another reply button does nothing. | Passed | You (browser) | 2026-10-19 | |
 | C6 | "Restart battle" in the middle of a battle and after it ends goes back to 2 and 2 with Laser. | Passed | You (browser) | 2026-10-19 | |
 | C7 | Keyboard only: Tab, Enter and Space play a whole battle, and the orange focus outline is visible. | Passed | You (browser) | 2026-10-19 | |
+
+## Full game (`index.html`): checks for you in your browser
+
+| # | Check | Result | Checked by | Date | Notes |
+|---|---|---|---|---|---|
+| G1 | Double-clicking `index.html` opens the game: title, message, "How to play", 9 empty squares, "Restart game". | Not tested | | | |
+| G2 | Picking a square hides "How to play", highlights the square and shows You 2, Alien 2 and Laser. Other squares don't respond. | Not tested | | | |
+| G3 | Winning a battle (Shield, Next exchange, Blast) puts X in the square, and you can pick another square. | Not tested | | | |
+| G4 | Losing a battle (Blast, Next exchange, Dodge) puts O in the square. | Not tested | | | |
+| G5 | Three X in a row shows "You win!" and highlights the line; no squares can be picked after. | Not tested | | | |
+| G6 | Three O in a row shows "You lose."; a full board with no line shows "Draw.". | Not tested | | | |
+| G7 | "Restart game" in the middle of a battle and after a result empties the board and shows "How to play" again. | Not tested | | | |
+| G8 | Keyboard only: a whole game can be played with Tab, Shift+Tab, Enter and Space, with the orange outline always visible. | Not tested | | | |
+| G9 | On a real phone: no sideways scrolling, tapping works. | Not tested | | | Optional. |

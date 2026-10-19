@@ -6,37 +6,58 @@
 <title>Alien Tic-Tac-Toe</title>
 <style>
   :root {
-    --bg: #f4f4f8;
-    --panel: #ffffff;
-    --text: #1a1a2e;
-    --muted: #4a4a5e;
-    --cell: #e6e6f0;
-    --cell-hover: #d6d6e6;
-    --x: #0b6b3a;
-    --o: #a3122b;
-    --good: #0b6b3a;
-    --bad: #a3122b;
-    --accent: #3b2db0;
-    --focus: #f0a000;
+    color-scheme: dark;
+    --bg: #070918;
+    --bg-glow: #1b1550;
+    --panel: #151935;
+    --panel-border: #343a72;
+    --text: #f2f3ff;
+    --muted: #b9bde3;
+    --cell: #20254d;
+    --cell-hover: #2c3266;
+    --x: #5ee6a8;
+    --o: #ff8f80;
+    --good: #6ee7a8;
+    --bad: #ff9b8f;
+    --accent: #9d90ff;
+    --button: #5b47e0;
+    --focus: #ffd257;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     padding: 16px;
-    background: var(--bg);
+    min-height: 100vh;
     color: var(--text);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     font-size: 18px;
     line-height: 1.4;
+    background-color: var(--bg);
+    /* Stars drawn with tiny gradient dots, over a soft glow. No image files. */
+    background-image:
+      radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, transparent),
+      radial-gradient(1px 1px at 90px 120px, #d8dcff, transparent),
+      radial-gradient(1.5px 1.5px at 160px 60px, #ffffff, transparent),
+      radial-gradient(1px 1px at 210px 170px, #c9ceff, transparent),
+      radial-gradient(1px 1px at 50px 190px, #ffffff, transparent),
+      radial-gradient(1.5px 1.5px at 130px 220px, #e8eaff, transparent),
+      radial-gradient(ellipse at 50% -10%, var(--bg-glow), transparent 70%);
+    background-size: 240px 240px, 240px 240px, 240px 240px, 240px 240px, 240px 240px, 240px 240px, 100% 100%;
+    background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, no-repeat;
   }
   main {
     max-width: 420px;
     margin: 0 auto;
   }
-  h1 { font-size: 1.5rem; margin: 0 0 12px; }
+  h1 {
+    font-size: 1.5rem;
+    margin: 0 0 12px;
+    letter-spacing: 0.02em;
+  }
   h2 { font-size: 1.1rem; margin: 0 0 8px; }
   #status {
     background: var(--panel);
+    border: 1px solid var(--panel-border);
     border-radius: 8px;
     padding: 12px;
     margin: 0 0 12px;
@@ -48,6 +69,7 @@
   #status.bad { color: var(--bad); }
   .instructions {
     background: var(--panel);
+    border: 1px solid var(--panel-border);
     border-radius: 8px;
     padding: 12px;
     margin: 0 0 12px;
@@ -65,20 +87,21 @@
   .cell {
     aspect-ratio: 1;
     min-height: 44px;
-    border: 2px solid transparent;
+    border: 2px solid var(--panel-border);
     border-radius: 8px;
     background: var(--cell);
     color: var(--text);
-    font-size: 2.25rem;
-    font-weight: 700;
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1;
     cursor: pointer;
   }
   .cell:hover:not(:disabled) { background: var(--cell-hover); }
   .cell:disabled { cursor: not-allowed; }
-  .cell.x { color: var(--x); }
-  .cell.o { color: var(--o); }
-  .cell.active { border-color: var(--accent); background: #dcd8ff; }
-  .cell.win-line { border-color: var(--text); background: #fff; }
+  .cell.x { color: var(--x); text-shadow: 0 0 10px rgba(94, 230, 168, 0.45); }
+  .cell.o { color: var(--o); text-shadow: 0 0 10px rgba(255, 143, 128, 0.45); }
+  .cell.active { border-color: var(--accent); background: #2f2a6b; }
+  .cell.win-line { border: 3px solid var(--text); background: #343a75; }
   .battle {
     background: var(--panel);
     border: 2px solid var(--accent);
@@ -86,18 +109,24 @@
     padding: 12px;
     margin: 0 0 12px;
   }
-  .battle-top {
-    display: grid;
-    grid-template-columns: 1fr 1.4fr 1fr;
+  .health-row {
+    display: flex;
+    justify-content: space-between;
     gap: 8px;
+    margin: 0 0 8px;
+    font-weight: 700;
+  }
+  .health-row p { margin: 0; }
+  .alien-row {
+    display: flex;
     align-items: center;
-    text-align: center;
+    justify-content: center;
+    gap: 12px;
     margin: 0 0 12px;
   }
-  .health { font-weight: 600; font-size: 1rem; }
-  .health span { display: block; font-size: 1.75rem; }
-  .alien-label { color: var(--muted); font-size: 0.9rem; }
-  #alien-move { display: block; font-size: 1.5rem; font-weight: 700; }
+  .alien-art { width: 64px; height: 64px; flex: none; }
+  .alien-label { display: block; color: var(--muted); font-size: 0.9rem; }
+  #alien-move { display: block; font-size: 1.5rem; font-weight: 800; }
   .replies {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -116,7 +145,7 @@
   .reply {
     background: var(--cell);
     color: var(--text);
-    border: 2px solid transparent;
+    border: 2px solid var(--panel-border);
   }
   .reply:hover:not(:disabled) { background: var(--cell-hover); }
   .reply.chosen { border-color: var(--text); }
@@ -125,13 +154,13 @@
     margin: 8px 0 0;
   }
   .main-btn {
-    background: var(--accent);
-    color: #fff;
-    border: 2px solid var(--accent);
+    background: var(--button);
+    color: #ffffff;
+    border: 2px solid var(--button);
   }
   .secondary-btn {
     background: var(--panel);
-    color: var(--accent);
+    color: var(--text);
     border: 2px solid var(--accent);
   }
   [hidden] { display: none !important; }
@@ -157,10 +186,25 @@
   <div class="board" id="board" role="group" aria-label="Game board"></div>
 
   <section class="battle" id="battle" aria-label="Battle" hidden>
-    <div class="battle-top">
-      <div class="health">You<span id="player-health"></span></div>
+    <div class="health-row">
+      <p>You: <span id="player-health"></span> of 2</p>
+      <p>Alien: <span id="alien-health"></span> of 2</p>
+    </div>
+    <div class="alien-row">
+      <svg class="alien-art" viewBox="0 0 64 64" aria-hidden="true">
+        <line x1="22" y1="14" x2="16" y2="4" stroke="#7ee08f" stroke-width="3" stroke-linecap="round"/>
+        <line x1="42" y1="14" x2="48" y2="4" stroke="#7ee08f" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="16" cy="4" r="3" fill="#ffd257"/>
+        <circle cx="48" cy="4" r="3" fill="#ffd257"/>
+        <ellipse cx="32" cy="32" rx="22" ry="20" fill="#7ee08f"/>
+        <circle cx="22" cy="28" r="5" fill="#070918"/>
+        <circle cx="32" cy="24" r="6" fill="#070918"/>
+        <circle cx="42" cy="28" r="5" fill="#070918"/>
+        <circle cx="33.5" cy="22.5" r="1.8" fill="#ffffff"/>
+        <rect x="24" y="39" width="16" height="4" rx="2" fill="#070918"/>
+        <rect x="20" y="50" width="24" height="10" rx="5" fill="#5bbf6e"/>
+      </svg>
       <div><span class="alien-label" id="exchange-label"></span><span id="alien-move"></span></div>
-      <div class="health">Alien<span id="alien-health"></span></div>
     </div>
     <div class="replies" role="group" aria-label="Your reply">
       <button type="button" class="btn reply" data-reply="Shield">Shield</button>
@@ -260,8 +304,9 @@
     } else {
       playerHealth -= 1;
     }
-    let text = 'Alien used ' + move + '. You replied ' + choice + '. ' +
-      (correct ? 'Correct! The alien loses 1 health.' : 'Wrong. You lose 1 health.');
+    let text = correct
+      ? choice + ' counters ' + move + '. Alien loses 1 health.'
+      : choice + ' does not counter ' + move + '. You lose 1 health.';
 
     // The battle ends immediately when either side reaches 0.
     if (alienHealth === 0 || playerHealth === 0) {

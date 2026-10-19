@@ -3,7 +3,7 @@
 Last updated: 2026-10-19
 
 ## Where things stand
-The full game is built in `index.html`. All 28 completion checks passed in Claude's automated test, and your browser checks G1–G8 passed. G9 (real phone) is not tested. The two prototype folders are kept as separate test files.
+The full game is built in `index.html`, now with a dark space look. All 28 completion checks passed in Claude's automated test, and your browser checks G1–G8 passed. G9 (real phone) is not tested. The two prototype folders are kept as separate test files.
 
 - Repo: `ehawk61/alien-tic-tac-toe-ai`
 - Working branch: `claude/charming-hypatia-zrpaus`
@@ -33,6 +33,7 @@ The full game is built in `index.html`. All 28 completion checks passed in Claud
 9. Built the full game in `index.html` from `game-rules.md`. All 28 completion checks passed (automated).
 10. You checked the game in your browser: G1–G8 passed. G9 (real phone) not tested.
 11. Fixed the wording of check 13. Decided to keep the phone's first screen and the prototype folders as they are.
+12. New look for `index.html`: dark space background, simple alien, clearer X and O, health as text, new message wording. Rules unchanged. All 28 checks plus 4 look checks passed (automated); your browser checks V1–V6 are still to do.
 
 ## Confirmed choices
 Confirmed on 2026-10-19 (already written into `game-rules.md`):

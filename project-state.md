@@ -32,6 +32,7 @@ The full game is built in `index.html`. All 28 completion checks passed in Claud
 8. You checked the battle prototype in your browser: C1–C7 passed.
 9. Built the full game in `index.html` from `game-rules.md`. All 28 completion checks passed (automated).
 10. You checked the game in your browser: G1–G8 passed. G9 (real phone) not tested.
+11. Fixed the wording of check 13. Decided to keep the phone's first screen and the prototype folders as they are.
 
 ## Confirmed choices
 Confirmed on 2026-10-19 (already written into `game-rules.md`):
@@ -44,8 +45,10 @@ Confirmed on 2026-10-19 (already written into `game-rules.md`):
 - Battle prototype: uses "Restart battle", which restarts one battle only. No board, no X or O. After a battle ends there is nothing to do except restart.
 
 ## Next step
-Not agreed yet. Waiting on your decision about the two open items below.
+Not agreed yet. The game is complete on the working branch; `main` still has only the first commit. Moving it to `main` needs a pull request, which Claude opens only if you ask.
 
-## Open items
-- Completion check 13 in `game-rules.md` says "three correct replies in a row", but two already win a battle (the alien has 2 health). The wording needs a fix.
-- On a phone the first screen needs scrolling down to reach the bottom of the board and "Restart game". It's allowed by the rules (no sideways scrolling), but it could be tightened.
+## Decisions made after the build
+Decided on 2026-10-19:
+- Completion check 13 now says "two correct replies" instead of "three" (the alien has 2 health).
+- The phone's first screen stays as it is: you scroll down to reach the bottom of the board and "Restart game". The rules allow this (they only rule out sideways scrolling).
+- `prototype-board/` and `prototype-battle/` are kept as a record.

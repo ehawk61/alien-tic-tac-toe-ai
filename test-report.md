@@ -20,7 +20,7 @@ Last updated: 2026-10-19. The game (`index.html`) is built. The 28 checks below 
 | 10 | After a reply, reply buttons are disabled and repeat presses change nothing. | Passed | Claude (automated) | 2026-10-19 | Also checked after every reply in all 17 battles. |
 | 11 | "Next exchange" appears only when both health values are above 0. | Passed | Claude (automated) | 2026-10-19 | All 17 possible battles played step by step. |
 | 12 | At 0 health the battle ends at once with no "Next exchange". | Passed | Claude (automated) | 2026-10-19 | All 17 possible battles played step by step. |
-| 13 | Three correct replies in a row: cell gets X. | Passed | Claude (automated) | 2026-10-19 | Wording issue: two correct replies already win, since the alien has only 2 health. Tested as 'winning the battle gives X'. |
+| 13 | Two correct replies in a row: cell gets X. | Passed | Claude (automated) | 2026-10-19 | Tested Shield then Blast. Wording corrected from "three" on 2026-10-19 (the alien has only 2 health). |
 | 14 | Two wrong replies in a row: cell gets O. | Passed | Claude (automated) | 2026-10-19 |  |
 | 15 | After a battle (game not over) the board unlocks; the next battle starts at health 2 each with "Laser". | Passed | Claude (automated) | 2026-10-19 |  |
 | 16 | No O ever appears except from a lost battle. | Passed | Claude (automated) | 2026-10-19 | The alien never places a mark on its own. |

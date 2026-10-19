@@ -107,7 +107,7 @@ Each check is something you can see or do in the browser. Results go in `test-re
 12. When a health value reaches 0 the battle ends at once with no "Next exchange" button.
 
 ### Battle results
-13. Three correct replies in a row: cell gets X.
+13. Two correct replies in a row: cell gets X.
 14. Two wrong replies in a row: cell gets O.
 15. After a battle (game not over) the board unlocks and a new empty cell can be picked. A new battle starts at health 2 each with "Laser".
 16. No O ever appears except from a lost battle.

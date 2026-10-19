@@ -7,7 +7,8 @@ The full game is built in `index.html`, now with a dark space look. All 28 compl
 
 - Repo: `ehawk61/alien-tic-tac-toe-ai`
 - Working branch: `claude/charming-hypatia-zrpaus`
-- Pull request to merge into `main`: https://github.com/ehawk61/alien-tic-tac-toe-ai/pull/1 (open, waiting for you to merge).
+- Pull request https://github.com/ehawk61/alien-tic-tac-toe-ai/pull/1 was merged into `main` on 2026-10-19. The game is on `main`.
+- A follow-up pull request adds a "How to play" README and this update.
 
 ## Files
 | File | Purpose |
@@ -35,7 +36,8 @@ The full game is built in `index.html`, now with a dark space look. All 28 compl
 11. Fixed the wording of check 13. Decided to keep the phone's first screen and the prototype folders as they are.
 12. New look for `index.html`: dark space background, simple alien, clearer X and O, health as text, new message wording. Rules unchanged. All 28 checks plus 4 look checks passed (automated).
 13. You checked the new look in your browser: V1–V6 passed.
-14. Opened a pull request to merge the work into `main`.
+14. Opened a pull request to merge the work into `main`. You merged it.
+15. Added "How to play" to `README.md` and updated this file, in a follow-up pull request.
 
 ## Confirmed choices
 Confirmed on 2026-10-19 (already written into `game-rules.md`):
@@ -48,7 +50,7 @@ Confirmed on 2026-10-19 (already written into `game-rules.md`):
 - Battle prototype: uses "Restart battle", which restarts one battle only. No board, no X or O. After a battle ends there is nothing to do except restart.
 
 ## Next step
-You review and merge the pull request on GitHub. After that, not agreed yet.
+You review and merge the follow-up pull request on GitHub. After that, not agreed yet.
 
 ## Decisions made after the build
 Decided on 2026-10-19:

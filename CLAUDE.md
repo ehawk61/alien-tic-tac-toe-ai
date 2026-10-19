@@ -22,5 +22,5 @@
 - The board must fit and work on a phone screen.
 
 # Project files
-- Keep project-brief.md and project-state.md current.
-- If project-brief.md, project-state.md, or test-report.md don't exist yet, create them at the next checkpoint instead of skipping them.
+- Keep game-brief.md and project-state.md current.
+- If game-brief.md, project-state.md, or test-report.md don't exist yet, create them at the next checkpoint instead of skipping them.

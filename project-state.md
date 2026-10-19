@@ -3,7 +3,7 @@
 Last updated: 2026-10-19
 
 ## Where things stand
-Planning is finished. A board-only prototype exists in `prototype-board/index.html`. The real game (`index.html`) has not been started.
+Planning is finished. Two prototypes exist: board-only in `prototype-board/index.html` and battle-only in `prototype-battle/index.html`. The real game (`index.html`) has not been started.
 
 - Repo: `ehawk61/alien-tic-tac-toe-ai`
 - Working branch: `claude/charming-hypatia-zrpaus`
@@ -18,6 +18,7 @@ Planning is finished. A board-only prototype exists in `prototype-board/index.ht
 | `project-state.md` | This file: where the project is and what comes next. |
 | `test-report.md` | Result of every completion check: Passed, Failed or Not tested. |
 | `prototype-board/index.html` | Temporary board-only prototype. Battles are replaced by "Test battle win" and "Test battle loss" buttons. Not the final game. |
+| `prototype-battle/index.html` | Temporary battle-only prototype: one battle with health, alien moves, replies, "Next exchange" and "Restart battle". No board. Not the final game. |
 
 ## Checkpoints done
 1. Added `CLAUDE.md` with the project rules.
@@ -26,6 +27,7 @@ Planning is finished. A board-only prototype exists in `prototype-board/index.ht
 4. Pointed `CLAUDE.md` at `game-brief.md`. Created `project-state.md` and `test-report.md`.
 5. Confirmed three design choices. Built the board-only prototype. All 16 automated checks passed.
 6. You checked the prototype in your browser: B1–B6 passed. B7 (real phone) not tested.
+7. Built the battle-only prototype. All 11 automated checks passed; your browser checks are still to do.
 
 ## Confirmed choices
 Confirmed on 2026-10-19 (already written into `game-rules.md`):
@@ -34,8 +36,8 @@ Confirmed on 2026-10-19 (already written into `game-rules.md`):
 3. "Restart game" is shown on every screen, including the final result.
 
 ## Prototype differences from the final game
-- Uses "Play again" instead of "Restart game". It is shown at all times.
-- Has no instructions screen, health or alien moves yet.
+- Board prototype: uses "Play again" instead of "Restart game" (shown at all times). No instructions screen, health or alien moves.
+- Battle prototype: uses "Restart battle", which restarts one battle only. No board, no X or O. After a battle ends there is nothing to do except restart.
 
 ## Next step
-Not agreed yet. Suggested: a battle-only prototype (health, alien moves Laser/Shield/Claw, reply buttons Shield/Blast/Dodge, "Next exchange").
+You check the battle prototype in your browser (steps in `test-report.md`). After that, not agreed yet. Suggested: join both prototypes into the real `index.html`.

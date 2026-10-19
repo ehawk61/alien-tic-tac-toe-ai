@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alien Tic-Tac-Toe: Battle Prototype</title>
+<style>
+  :root {
+    --bg: #f4f4f8;
+    --panel: #ffffff;
+    --text: #1a1a2e;
+    --muted: #4a4a5e;
+    --good: #0b6b3a;
+    --bad: #a3122b;
+    --accent: #3b2db0;
+    --focus: #f0a000;
+    --reply: #e6e6f0;
+    --reply-hover: #d6d6e6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 16px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 18px;
+    line-height: 1.4;
+  }
+  main {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 1.5rem; margin: 0 0 8px; }
+  .note { color: var(--muted); font-size: 1rem; margin: 0 0 16px; }
+  .health {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 0 0 16px;
+  }
+  .health div {
+    background: var(--panel);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+  }
+  .health span { display: block; font-size: 2rem; }
+  .alien {
+    background: var(--panel);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 0 0 16px;
+    text-align: center;
+  }
+  .alien .label { color: var(--muted); font-size: 1rem; }
+  #alien-move { font-size: 1.75rem; font-weight: 700; margin: 4px 0 0; }
+  #status {
+    background: var(--panel);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 0 0 16px;
+    min-height: 3.2em;
+    font-weight: 600;
+  }
+  #status:focus { outline: 3px solid var(--focus); outline-offset: 2px; }
+  #status.good { color: var(--good); }
+  #status.bad { color: var(--bad); }
+  .replies {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 0 0 16px;
+  }
+  .btn {
+    min-height: 44px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .reply {
+    min-height: 56px;
+    background: var(--reply);
+    color: var(--text);
+    border: 2px solid transparent;
+  }
+  .reply:hover:not(:disabled) { background: var(--reply-hover); }
+  .reply.chosen { border-color: var(--text); }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .main-btn {
+    background: var(--accent);
+    color: #fff;
+    border: 2px solid var(--accent);
+  }
+  .secondary-btn {
+    background: var(--panel);
+    color: var(--accent);
+    border: 2px solid var(--accent);
+  }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Alien Tic-Tac-Toe</h1>
+  <p class="note">Battle prototype. One battle, no board.</p>
+
+  <div class="health">
+    <div>You<span id="player-health" aria-label="Your health"></span></div>
+    <div>Alien<span id="alien-health" aria-label="Alien health"></span></div>
+  </div>
+
+  <div class="alien">
+    <div class="label" id="exchange-label"></div>
+    <p id="alien-move"></p>
+  </div>
+
+  <p id="status" tabindex="-1" aria-live="polite"></p>
+
+  <div class="replies" role="group" aria-label="Your reply">
+    <button type="button" class="btn reply" data-reply="Shield">Shield</button>
+    <button type="button" class="btn reply" data-reply="Blast">Blast</button>
+    <button type="button" class="btn reply" data-reply="Dodge">Dodge</button>
+  </div>
+
+  <div class="controls">
+    <button type="button" class="btn main-btn" id="next-exchange" hidden>Next exchange</button>
+    <button type="button" class="btn secondary-btn" id="restart">Restart battle</button>
+  </div>
+</main>
+
+<script>
+  // The alien's moves in order, and the correct reply to each.
+  const ALIEN_MOVES = ['Laser', 'Shield', 'Claw'];
+  const CORRECT_REPLY = { Laser: 'Shield', Shield: 'Blast', Claw: 'Dodge' };
+  const START_HEALTH = 2;
+
+  const playerHealthEl = document.getElementById('player-health');
+  const alienHealthEl = document.getElementById('alien-health');
+  const exchangeLabelEl = document.getElementById('exchange-label');
+  const alienMoveEl = document.getElementById('alien-move');
+  const statusEl = document.getElementById('status');
+  const replyBtns = Array.from(document.querySelectorAll('.reply'));
+  const nextBtn = document.getElementById('next-exchange');
+  const restartBtn = document.getElementById('restart');
+
+  // phase: "response" (waiting for one reply), "feedback" (reply shown, both alive), "finished" (someone at 0)
+  let playerHealth, alienHealth, exchange, phase, chosenReply;
+
+  function reset() {
+    playerHealth = START_HEALTH;
+    alienHealth = START_HEALTH;
+    exchange = 0;
+    startExchange();
+  }
+
+  function startExchange() {
+    phase = 'response';
+    chosenReply = null;
+    statusEl.className = '';
+    statusEl.textContent = 'The alien uses ' + ALIEN_MOVES[exchange] + '. Choose your reply.';
+    render();
+  }
+
+  function reply(choice) {
+    // Only one accepted reply per exchange.
+    if (phase !== 'response') return;
+    chosenReply = choice;
+    const move = ALIEN_MOVES[exchange];
+    const correct = CORRECT_REPLY[move] === choice;
+    if (correct) {
+      alienHealth -= 1;
+    } else {
+      playerHealth -= 1;
+    }
+
+    let text = 'Alien used ' + move + '. You replied ' + choice + '. ' +
+      (correct ? 'Correct! The alien loses 1 health.' : 'Wrong. You lose 1 health.');
+    statusEl.className = correct ? 'good' : 'bad';
+
+    // The battle ends immediately when either side reaches 0.
+    if (alienHealth === 0) {
+      phase = 'finished';
+      text += ' You won the battle!';
+    } else if (playerHealth === 0) {
+      phase = 'finished';
+      text += ' You lost the battle.';
+    } else {
+      phase = 'feedback';
+    }
+    statusEl.textContent = text;
+    render();
+    if (phase === 'feedback') {
+      nextBtn.focus();
+    } else {
+      statusEl.focus();
+    }
+  }
+
+  function nextExchange() {
+    if (phase !== 'feedback') return;
+    exchange += 1;
+    startExchange();
+    replyBtns[0].focus();
+  }
+
+  function render() {
+    playerHealthEl.textContent = playerHealth;
+    alienHealthEl.textContent = alienHealth;
+    exchangeLabelEl.textContent = 'Exchange ' + (exchange + 1) + ': the alien shows';
+    alienMoveEl.textContent = ALIEN_MOVES[exchange];
+    replyBtns.forEach(btn => {
+      btn.disabled = phase !== 'response';
+      btn.classList.toggle('chosen', btn.dataset.reply === chosenReply);
+    });
+    // "Next exchange" only appears when both sides still have health.
+    nextBtn.hidden = !(phase === 'feedback' && playerHealth > 0 && alienHealth > 0);
+  }
+
+  replyBtns.forEach(btn => btn.addEventListener('click', () => reply(btn.dataset.reply)));
+  nextBtn.addEventListener('click', nextExchange);
+  restartBtn.addEventListener('click', () => {
+    reset();
+    replyBtns[0].focus();
+  });
+
+  reset();
+</script>
+</body>
+</html>

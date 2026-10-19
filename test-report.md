@@ -73,3 +73,35 @@ Run on 2026-10-19 in a headless Chromium browser (Playwright), against the file 
 | B5 | "Play again" empties the board. | Passed | You (browser) | 2026-10-19 | |
 | B6 | Keyboard only: Tab moves between buttons, Enter or Space presses them, and the orange focus outline is visible. | Passed | You (browser) | 2026-10-19 | |
 | B7 | On a real phone: everything fits and tapping works. | Not tested | | | Optional: needs the file copied to the phone. |
+
+## Battle prototype (`prototype-battle/index.html`)
+This is a temporary prototype, not the final game, so its results don't count toward the 28 checks above.
+
+### Automated checks run by Claude
+Run on 2026-10-19 in a headless Chromium browser (Playwright), against the file opened directly from disk.
+
+| # | Check | Result | Checked by | Date | Notes |
+|---|---|---|---|---|---|
+| T1 | Start: both health 2, alien shows Laser, replies enabled, no "Next exchange", "Restart battle" visible. | Passed | Claude (automated) | 2026-10-19 | |
+| T2 | Every possible reply sequence follows the rules: Laser → Shield → Claw order; correct reply costs alien 1, wrong costs player 1; "Next exchange" only while both have health; ends at 0 with the right result. | Passed | Claude (automated) | 2026-10-19 | All 17 possible battles checked step by step (5 won, 12 lost). Battles last 2 or 3 exchanges. |
+| T3 | Only the first reply in an exchange counts; extra clicks and double clicks are ignored. | Passed | Claude (automated) | 2026-10-19 | |
+| T4 | "Next exchange" shows the next alien move and turns the replies back on. | Passed | Claude (automated) | 2026-10-19 | |
+| T5 | At 0 health the battle ends at once; no "Next exchange" and replies stay off. | Passed | Claude (automated) | 2026-10-19 | |
+| T6 | "Restart battle" resets health, alien move and messages while choosing, after feedback and after the battle ends. | Passed | Claude (automated) | 2026-10-19 | |
+| T7 | Keyboard only plays to a result; focus goes Shield → "Next exchange" → Shield → message. | Passed | Claude (automated) | 2026-10-19 | |
+| T8 | No timers, sound or outside websites. | Passed | Claude (automated) | 2026-10-19 | |
+| T9 | No script errors. | Passed | Claude (automated) | 2026-10-19 | |
+| T10 | At 360 px wide: no sideways scrolling, every button at least 44 px, everything on one screen. | Passed | Claude (automated) | 2026-10-19 | |
+| T11 | Simulated touch taps play a battle to a result. | Passed | Claude (automated) | 2026-10-19 | Simulated, not a real phone. |
+
+### Checks for you in your browser
+
+| # | Check | Result | Checked by | Date | Notes |
+|---|---|---|---|---|---|
+| C1 | Double-clicking `prototype-battle/index.html` opens it: You 2, Alien 2, alien shows Laser. | Not tested | | | |
+| C2 | Win: Shield, Next exchange, Blast. Alien health goes 2 → 1 → 0 and "You won the battle!" shows with no "Next exchange". | Not tested | | | |
+| C3 | Lose: Blast, Next exchange, Dodge. Your health goes 2 → 1 → 0 and "You lost the battle." shows. | Not tested | | | |
+| C4 | Three exchanges: Shield, Next exchange, Dodge, Next exchange. The alien shows Claw. | Not tested | | | |
+| C5 | After a reply, clicking another reply button does nothing. | Not tested | | | |
+| C6 | "Restart battle" in the middle of a battle and after it ends goes back to 2 and 2 with Laser. | Not tested | | | |
+| C7 | Keyboard only: Tab, Enter and Space play a whole battle, and the orange focus outline is visible. | Not tested | | | |

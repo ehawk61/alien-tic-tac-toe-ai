@@ -3,7 +3,7 @@
 Last updated: 2026-10-19
 
 ## Where things stand
-The full game is built in `index.html`. All 28 completion checks passed in Claude's automated test; your browser checks (G1–G9 in `test-report.md`) are still to do. The two prototype folders are kept as separate test files.
+The full game is built in `index.html`. All 28 completion checks passed in Claude's automated test, and your browser checks G1–G8 passed. G9 (real phone) is not tested. The two prototype folders are kept as separate test files.
 
 - Repo: `ehawk61/alien-tic-tac-toe-ai`
 - Working branch: `claude/charming-hypatia-zrpaus`
@@ -31,6 +31,7 @@ The full game is built in `index.html`. All 28 completion checks passed in Claud
 7. Built the battle-only prototype. All 11 automated checks passed.
 8. You checked the battle prototype in your browser: C1–C7 passed.
 9. Built the full game in `index.html` from `game-rules.md`. All 28 completion checks passed (automated).
+10. You checked the game in your browser: G1–G8 passed. G9 (real phone) not tested.
 
 ## Confirmed choices
 Confirmed on 2026-10-19 (already written into `game-rules.md`):
@@ -43,7 +44,7 @@ Confirmed on 2026-10-19 (already written into `game-rules.md`):
 - Battle prototype: uses "Restart battle", which restarts one battle only. No board, no X or O. After a battle ends there is nothing to do except restart.
 
 ## Next step
-You check the game in your browser (G1–G9 in `test-report.md`). After that, not agreed yet.
+Not agreed yet. Waiting on your decision about the two open items below.
 
 ## Open items
 - Completion check 13 in `game-rules.md` says "three correct replies in a row", but two already win a battle (the alien has 2 health). The wording needs a fix.

@@ -4,7 +4,7 @@ Each check comes from "Completion checks" in `game-rules.md`.
 Result is one of: **Passed**, **Failed**, **Not tested**.
 "Checked by" says who ran it: Claude (automated) or you (in the browser).
 
-Last updated: 2026-10-19. The game (`index.html`) is built. The 28 checks below were run automatically by Claude; your browser checks for the game are in the "Full game" section further down.
+Last updated: 2026-10-19. The game (`index.html`) is built. The 28 checks below were run automatically by Claude and all passed. Your browser checks for the game (G1–G8) also passed; G9 (real phone) is not tested.
 
 | # | Check | Result | Checked by | Date | Notes |
 |---|---|---|---|---|---|
@@ -110,12 +110,12 @@ Run on 2026-10-19 in a headless Chromium browser (Playwright), against the file 
 
 | # | Check | Result | Checked by | Date | Notes |
 |---|---|---|---|---|---|
-| G1 | Double-clicking `index.html` opens the game: title, message, "How to play", 9 empty squares, "Restart game". | Not tested | | | |
-| G2 | Picking a square hides "How to play", highlights the square and shows You 2, Alien 2 and Laser. Other squares don't respond. | Not tested | | | |
-| G3 | Winning a battle (Shield, Next exchange, Blast) puts X in the square, and you can pick another square. | Not tested | | | |
-| G4 | Losing a battle (Blast, Next exchange, Dodge) puts O in the square. | Not tested | | | |
-| G5 | Three X in a row shows "You win!" and highlights the line; no squares can be picked after. | Not tested | | | |
-| G6 | Three O in a row shows "You lose."; a full board with no line shows "Draw.". | Not tested | | | |
-| G7 | "Restart game" in the middle of a battle and after a result empties the board and shows "How to play" again. | Not tested | | | |
-| G8 | Keyboard only: a whole game can be played with Tab, Shift+Tab, Enter and Space, with the orange outline always visible. | Not tested | | | |
+| G1 | Double-clicking `index.html` opens the game: title, message, "How to play", 9 empty squares, "Restart game". | Passed | You (browser) | 2026-10-19 | |
+| G2 | Picking a square hides "How to play", highlights the square and shows You 2, Alien 2 and Laser. Other squares don't respond. | Passed | You (browser) | 2026-10-19 | |
+| G3 | Winning a battle (Shield, Next exchange, Blast) puts X in the square, and you can pick another square. | Passed | You (browser) | 2026-10-19 | |
+| G4 | Losing a battle (Blast, Next exchange, Dodge) puts O in the square. | Passed | You (browser) | 2026-10-19 | |
+| G5 | Three X in a row shows "You win!" and highlights the line; no squares can be picked after. | Passed | You (browser) | 2026-10-19 | |
+| G6 | Three O in a row shows "You lose."; a full board with no line shows "Draw.". | Passed | You (browser) | 2026-10-19 | |
+| G7 | "Restart game" in the middle of a battle and after a result empties the board and shows "How to play" again. | Passed | You (browser) | 2026-10-19 | |
+| G8 | Keyboard only: a whole game can be played with Tab, Shift+Tab, Enter and Space, with the orange outline always visible. | Passed | You (browser) | 2026-10-19 | |
 | G9 | On a real phone: no sideways scrolling, tapping works. | Not tested | | | Optional. |

@@ -27,7 +27,8 @@ Planning is finished. Two prototypes exist: board-only in `prototype-board/index
 4. Pointed `CLAUDE.md` at `game-brief.md`. Created `project-state.md` and `test-report.md`.
 5. Confirmed three design choices. Built the board-only prototype. All 16 automated checks passed.
 6. You checked the prototype in your browser: B1–B6 passed. B7 (real phone) not tested.
-7. Built the battle-only prototype. All 11 automated checks passed; your browser checks are still to do.
+7. Built the battle-only prototype. All 11 automated checks passed.
+8. You checked the battle prototype in your browser: C1–C7 passed.
 
 ## Confirmed choices
 Confirmed on 2026-10-19 (already written into `game-rules.md`):
@@ -40,4 +41,4 @@ Confirmed on 2026-10-19 (already written into `game-rules.md`):
 - Battle prototype: uses "Restart battle", which restarts one battle only. No board, no X or O. After a battle ends there is nothing to do except restart.
 
 ## Next step
-You check the battle prototype in your browser (steps in `test-report.md`). After that, not agreed yet. Suggested: join both prototypes into the real `index.html`.
+Not agreed yet. Suggested: join both prototypes into the real `index.html`, following `game-rules.md` (instructions, board, battles, "Restart game").

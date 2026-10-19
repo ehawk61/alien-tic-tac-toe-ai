@@ -98,10 +98,10 @@ Run on 2026-10-19 in a headless Chromium browser (Playwright), against the file 
 
 | # | Check | Result | Checked by | Date | Notes |
 |---|---|---|---|---|---|
-| C1 | Double-clicking `prototype-battle/index.html` opens it: You 2, Alien 2, alien shows Laser. | Not tested | | | |
-| C2 | Win: Shield, Next exchange, Blast. Alien health goes 2 → 1 → 0 and "You won the battle!" shows with no "Next exchange". | Not tested | | | |
-| C3 | Lose: Blast, Next exchange, Dodge. Your health goes 2 → 1 → 0 and "You lost the battle." shows. | Not tested | | | |
-| C4 | Three exchanges: Shield, Next exchange, Dodge, Next exchange. The alien shows Claw. | Not tested | | | |
-| C5 | After a reply, clicking another reply button does nothing. | Not tested | | | |
-| C6 | "Restart battle" in the middle of a battle and after it ends goes back to 2 and 2 with Laser. | Not tested | | | |
-| C7 | Keyboard only: Tab, Enter and Space play a whole battle, and the orange focus outline is visible. | Not tested | | | |
+| C1 | Double-clicking `prototype-battle/index.html` opens it: You 2, Alien 2, alien shows Laser. | Passed | You (browser) | 2026-10-19 | |
+| C2 | Win: Shield, Next exchange, Blast. Alien health goes 2 → 1 → 0 and "You won the battle!" shows with no "Next exchange". | Passed | You (browser) | 2026-10-19 | |
+| C3 | Lose: Blast, Next exchange, Dodge. Your health goes 2 → 1 → 0 and "You lost the battle." shows. | Passed | You (browser) | 2026-10-19 | |
+| C4 | Three exchanges: Shield, Next exchange, Dodge, Next exchange. The alien shows Claw. | Passed | You (browser) | 2026-10-19 | |
+| C5 | After a reply, clicking another reply button does nothing. | Passed | You (browser) | 2026-10-19 | |
+| C6 | "Restart battle" in the middle of a battle and after it ends goes back to 2 and 2 with Laser. | Passed | You (browser) | 2026-10-19 | |
+| C7 | Keyboard only: Tab, Enter and Space play a whole battle, and the orange focus outline is visible. | Passed | You (browser) | 2026-10-19 | |

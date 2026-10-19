@@ -24,7 +24,8 @@ Planning is finished. A board-only prototype exists in `prototype-board/index.ht
 2. Added 11 more rules to `CLAUDE.md`.
 3. Wrote `game-brief.md` and `game-rules.md`.
 4. Pointed `CLAUDE.md` at `game-brief.md`. Created `project-state.md` and `test-report.md`.
-5. Confirmed three design choices. Built the board-only prototype. All 16 automated checks passed; your browser checks are still to do.
+5. Confirmed three design choices. Built the board-only prototype. All 16 automated checks passed.
+6. You checked the prototype in your browser: B1–B6 passed. B7 (real phone) not tested.
 
 ## Confirmed choices
 Confirmed on 2026-10-19 (already written into `game-rules.md`):
@@ -37,4 +38,4 @@ Confirmed on 2026-10-19 (already written into `game-rules.md`):
 - Has no instructions screen, health or alien moves yet.
 
 ## Next step
-You check the prototype in your browser (steps in `test-report.md`). After that, not agreed yet. A likely next step is a battle-only prototype.
+Not agreed yet. Suggested: a battle-only prototype (health, alien moves Laser/Shield/Claw, reply buttons Shield/Blast/Dodge, "Next exchange").

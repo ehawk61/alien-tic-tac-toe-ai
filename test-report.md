@@ -136,9 +136,9 @@ Changed only how the game looks and the message wording; the rules are the same.
 
 | # | Check | Result | Checked by | Date | Notes |
 |---|---|---|---|---|---|
-| V1 | The page has a dark background with small stars. | Not tested | | | |
-| V2 | During a battle a small green alien appears next to the alien's move. | Not tested | | | |
-| V3 | X (green) and O (coral) are easy to tell apart. | Not tested | | | |
-| V4 | Health reads "You: 2 of 2" and "Alien: 2 of 2" at the start of a battle. | Not tested | | | |
-| V5 | A right reply shows a message like "Shield counters Laser. Alien loses 1 health."; a wrong one says "does not counter". | Not tested | | | |
-| V6 | All text is easy to read. | Not tested | | | |
+| V1 | The page has a dark background with small stars. | Passed | You (browser) | 2026-10-19 | |
+| V2 | During a battle a small green alien appears next to the alien's move. | Passed | You (browser) | 2026-10-19 | |
+| V3 | X (green) and O (coral) are easy to tell apart. | Passed | You (browser) | 2026-10-19 | |
+| V4 | Health reads "You: 2 of 2" and "Alien: 2 of 2" at the start of a battle. | Passed | You (browser) | 2026-10-19 | |
+| V5 | A right reply shows a message like "Shield counters Laser. Alien loses 1 health."; a wrong one says "does not counter". | Passed | You (browser) | 2026-10-19 | |
+| V6 | All text is easy to read. | Passed | You (browser) | 2026-10-19 | |

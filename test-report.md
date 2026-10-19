@@ -4,7 +4,7 @@ Each check comes from "Completion checks" in `game-rules.md`.
 Result is one of: **Passed**, **Failed**, **Not tested**.
 "Checked by" says who ran it: Claude (automated) or you (in the browser).
 
-Last updated: 2026-10-19. The game (`index.html`) is built. The 28 checks below were run automatically by Claude and all passed. Your browser checks for the game (G1–G8) also passed; G9 (real phone) is not tested.
+Last updated: 2026-10-19. The game (`index.html`) is built. The 28 checks below were run automatically by Claude and all passed. They were run again after the new look and still all pass. Your browser checks for the game (G1–G8) also passed; G9 (real phone) is not tested.
 
 | # | Check | Result | Checked by | Date | Notes |
 |---|---|---|---|---|---|
@@ -119,3 +119,26 @@ Run on 2026-10-19 in a headless Chromium browser (Playwright), against the file 
 | G7 | "Restart game" in the middle of a battle and after a result empties the board and shows "How to play" again. | Passed | You (browser) | 2026-10-19 | |
 | G8 | Keyboard only: a whole game can be played with Tab, Shift+Tab, Enter and Space, with the orange outline always visible. | Passed | You (browser) | 2026-10-19 | |
 | G9 | On a real phone: no sideways scrolling, tapping works. | Not tested | | | Optional. |
+
+## New look (`index.html`)
+Changed only how the game looks and the message wording; the rules are the same. All 28 checks above were run again afterwards and still pass.
+
+### Automated checks run by Claude
+
+| # | Check | Result | Checked by | Date | Notes |
+|---|---|---|---|---|---|
+| L1 | After every reply the message reads "[Reply] counters [move]. Alien loses 1 health." or "[Reply] does not counter [move]. You lose 1 health." | Passed | Claude (automated) | 2026-10-19 | Checked after every reply in all 17 possible battles. |
+| L2 | Health shows as "You: N of 2" and "Alien: N of 2" with the right numbers after every reply. | Passed | Claude (automated) | 2026-10-19 | Checked after every reply in all 17 possible battles. |
+| L3 | Text and marks have enough color contrast (at least 4.5 to 1). | Passed | Claude (calculated) | 2026-10-19 | Lowest: O on a highlighted winning square, 4.73 to 1. Calculated from the color codes, not measured on screen. |
+| L4 | No image files, fonts or other outside assets; the alien and the stars are drawn in code. | Passed | Claude (automated) | 2026-10-19 | Same as check 28. |
+
+### Checks for you in your browser
+
+| # | Check | Result | Checked by | Date | Notes |
+|---|---|---|---|---|---|
+| V1 | The page has a dark background with small stars. | Not tested | | | |
+| V2 | During a battle a small green alien appears next to the alien's move. | Not tested | | | |
+| V3 | X (green) and O (coral) are easy to tell apart. | Not tested | | | |
+| V4 | Health reads "You: 2 of 2" and "Alien: 2 of 2" at the start of a battle. | Not tested | | | |
+| V5 | A right reply shows a message like "Shield counters Laser. Alien loses 1 health."; a wrong one says "does not counter". | Not tested | | | |
+| V6 | All text is easy to read. | Not tested | | | |

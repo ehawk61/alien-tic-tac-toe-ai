@@ -11,6 +11,13 @@ Anyone with a web browser, on a computer or a phone. Players don't need an accou
 - Plain HTML, CSS and JavaScript. No frameworks, build steps, backend, accounts, paid APIs or downloaded assets.
 - Opens by double-clicking `index.html`.
 
+## Look
+- Dark space background with stars, drawn in code (no image files).
+- A simple alien made of basic shapes (circles, lines and rectangles) shown during battles.
+- Large, clear X (green) and O (coral) marks.
+- Health shown as text, for example "You: 2 of 2" and "Alien: 1 of 2".
+- Battle messages say what happened, for example "Shield counters Laser. Alien loses 1 health."
+
 ## In scope
 - A 3x3 board with squares numbered 1 to 9 (top row 1-2-3, middle row 4-5-6, bottom row 7-8-9).
 - Battles with health, alien moves and three reply buttons.

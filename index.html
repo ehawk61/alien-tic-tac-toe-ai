@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alien Tic-Tac-Toe</title>
+<style>
+  :root {
+    --bg: #f4f4f8;
+    --panel: #ffffff;
+    --text: #1a1a2e;
+    --muted: #4a4a5e;
+    --cell: #e6e6f0;
+    --cell-hover: #d6d6e6;
+    --x: #0b6b3a;
+    --o: #a3122b;
+    --good: #0b6b3a;
+    --bad: #a3122b;
+    --accent: #3b2db0;
+    --focus: #f0a000;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 16px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 18px;
+    line-height: 1.4;
+  }
+  main {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 1.5rem; margin: 0 0 12px; }
+  h2 { font-size: 1.1rem; margin: 0 0 8px; }
+  #status {
+    background: var(--panel);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 0 0 12px;
+    min-height: 3.2em;
+    font-weight: 600;
+  }
+  #status:focus { outline: 3px solid var(--focus); outline-offset: 2px; }
+  #status.good { color: var(--good); }
+  #status.bad { color: var(--bad); }
+  .instructions {
+    background: var(--panel);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 0 0 12px;
+    font-size: 1rem;
+  }
+  .instructions ol { margin: 0; padding-left: 1.3em; }
+  .instructions li { margin: 0 0 4px; }
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    max-width: 264px;
+    margin: 0 auto 12px;
+  }
+  .cell {
+    aspect-ratio: 1;
+    min-height: 44px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: var(--cell);
+    color: var(--text);
+    font-size: 2.25rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .cell:hover:not(:disabled) { background: var(--cell-hover); }
+  .cell:disabled { cursor: not-allowed; }
+  .cell.x { color: var(--x); }
+  .cell.o { color: var(--o); }
+  .cell.active { border-color: var(--accent); background: #dcd8ff; }
+  .cell.win-line { border-color: var(--text); background: #fff; }
+  .battle {
+    background: var(--panel);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 0 0 12px;
+  }
+  .battle-top {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr 1fr;
+    gap: 8px;
+    align-items: center;
+    text-align: center;
+    margin: 0 0 12px;
+  }
+  .health { font-weight: 600; font-size: 1rem; }
+  .health span { display: block; font-size: 1.75rem; }
+  .alien-label { color: var(--muted); font-size: 0.9rem; }
+  #alien-move { display: block; font-size: 1.5rem; font-weight: 700; }
+  .replies {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .btn {
+    min-height: 44px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .reply {
+    background: var(--cell);
+    color: var(--text);
+    border: 2px solid transparent;
+  }
+  .reply:hover:not(:disabled) { background: var(--cell-hover); }
+  .reply.chosen { border-color: var(--text); }
+  #next-exchange {
+    width: 100%;
+    margin: 8px 0 0;
+  }
+  .main-btn {
+    background: var(--accent);
+    color: #fff;
+    border: 2px solid var(--accent);
+  }
+  .secondary-btn {
+    background: var(--panel);
+    color: var(--accent);
+    border: 2px solid var(--accent);
+  }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Alien Tic-Tac-Toe</h1>
+
+  <p id="status" tabindex="-1" aria-live="polite"></p>
+
+  <section class="instructions" id="instructions" aria-labelledby="how-to-play">
+    <h2 id="how-to-play">How to play</h2>
+    <ol>
+      <li>Pick an empty square to battle an alien for it.</li>
+      <li>The alien attacks with Laser, then Shield, then Claw. Reply with Shield to Laser, Blast to Shield and Dodge to Claw.</li>
+      <li>A right reply costs the alien 1 health; a wrong one costs you 1. You each start with 2.</li>
+      <li>Win the battle to get an X in the square. Lose it and the alien gets an O.</li>
+      <li>Three X in a line wins the game. Three O loses it. A full board with no line is a draw.</li>
+    </ol>
+  </section>
+
+  <div class="board" id="board" role="group" aria-label="Game board"></div>
+
+  <section class="battle" id="battle" aria-label="Battle" hidden>
+    <div class="battle-top">
+      <div class="health">You<span id="player-health"></span></div>
+      <div><span class="alien-label" id="exchange-label"></span><span id="alien-move"></span></div>
+      <div class="health">Alien<span id="alien-health"></span></div>
+    </div>
+    <div class="replies" role="group" aria-label="Your reply">
+      <button type="button" class="btn reply" data-reply="Shield">Shield</button>
+      <button type="button" class="btn reply" data-reply="Blast">Blast</button>
+      <button type="button" class="btn reply" data-reply="Dodge">Dodge</button>
+    </div>
+    <button type="button" class="btn main-btn" id="next-exchange" hidden>Next exchange</button>
+  </section>
+
+  <button type="button" class="btn secondary-btn" id="restart">Restart game</button>
+</main>
+
+<script>
+  const LINES = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+  ];
+  // The alien's moves in order, and the correct reply to each.
+  const ALIEN_MOVES = ['Laser', 'Shield', 'Claw'];
+  const CORRECT_REPLY = { Laser: 'Shield', Shield: 'Blast', Claw: 'Dodge' };
+  const START_HEALTH = 2;
+
+  const statusEl = document.getElementById('status');
+  const instructionsEl = document.getElementById('instructions');
+  const boardEl = document.getElementById('board');
+  const battleEl = document.getElementById('battle');
+  const playerHealthEl = document.getElementById('player-health');
+  const alienHealthEl = document.getElementById('alien-health');
+  const exchangeLabelEl = document.getElementById('exchange-label');
+  const alienMoveEl = document.getElementById('alien-move');
+  const replyBtns = Array.from(document.querySelectorAll('.reply'));
+  const nextBtn = document.getElementById('next-exchange');
+  const restartBtn = document.getElementById('restart');
+
+  // phase, matching the states in game-rules.md:
+  // "instructions", "chooseResponse", "exchangeFeedback", "battleFinished", "boardFinished".
+  // "Choose cell" is the battleFinished phase: the last result shows and the board is unlocked.
+  let board, phase, activeCell, winningLine;
+  let playerHealth, alienHealth, exchange, chosenReply;
+
+  const cells = [];
+  for (let i = 0; i < 9; i++) {
+    const cell = document.createElement('button');
+    cell.type = 'button';
+    cell.className = 'cell';
+    cell.addEventListener('click', () => selectCell(i));
+    boardEl.appendChild(cell);
+    cells.push(cell);
+  }
+
+  function setStatus(text, tone) {
+    statusEl.textContent = text;
+    statusEl.className = tone || '';
+  }
+
+  function restartGame() {
+    board = Array(9).fill(null);
+    phase = 'instructions';
+    activeCell = null;
+    winningLine = null;
+    chosenReply = null;
+    setStatus('Pick any square to start a battle for it.');
+    render();
+  }
+
+  function cellsUnlocked() {
+    return phase === 'instructions' || phase === 'battleFinished';
+  }
+
+  function selectCell(i) {
+    if (!cellsUnlocked() || board[i] !== null) return;
+    activeCell = i;
+    playerHealth = START_HEALTH;
+    alienHealth = START_HEALTH;
+    exchange = 0;
+    startExchange();
+    replyBtns[0].focus();
+  }
+
+  function startExchange() {
+    phase = 'chooseResponse';
+    chosenReply = null;
+    setStatus('Battle for square ' + (activeCell + 1) + '. The alien uses ' +
+      ALIEN_MOVES[exchange] + '. Choose your reply.');
+    render();
+  }
+
+  function reply(choice) {
+    // Only one accepted reply per exchange.
+    if (phase !== 'chooseResponse') return;
+    chosenReply = choice;
+    const move = ALIEN_MOVES[exchange];
+    const correct = CORRECT_REPLY[move] === choice;
+    if (correct) {
+      alienHealth -= 1;
+    } else {
+      playerHealth -= 1;
+    }
+    let text = 'Alien used ' + move + '. You replied ' + choice + '. ' +
+      (correct ? 'Correct! The alien loses 1 health.' : 'Wrong. You lose 1 health.');
+
+    // The battle ends immediately when either side reaches 0.
+    if (alienHealth === 0 || playerHealth === 0) {
+      const mark = alienHealth === 0 ? 'X' : 'O';
+      const square = activeCell + 1;
+      board[activeCell] = mark;
+      text += mark === 'X'
+        ? ' You won the battle: X in square ' + square + '.'
+        : ' You lost the battle: O in square ' + square + '.';
+      const result = checkBoard();
+      if (result) {
+        phase = 'boardFinished';
+        text += ' ' + result + ' Press Restart game to play again.';
+      } else {
+        phase = 'battleFinished';
+        text += ' Pick another empty square.';
+      }
+      setStatus(text, mark === 'X' ? 'good' : 'bad');
+      render();
+      statusEl.focus();
+    } else {
+      phase = 'exchangeFeedback';
+      setStatus(text, correct ? 'good' : 'bad');
+      render();
+      nextBtn.focus();
+    }
+  }
+
+  function nextExchange() {
+    if (phase !== 'exchangeFeedback') return;
+    exchange += 1;
+    startExchange();
+    replyBtns[0].focus();
+  }
+
+  function checkBoard() {
+    for (const line of LINES) {
+      const [a, b, c] = line;
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        winningLine = line;
+        return board[a] === 'X' ? 'You win!' : 'You lose.';
+      }
+    }
+    if (board.every(v => v !== null)) return 'Draw.';
+    return null;
+  }
+
+  function render() {
+    const unlocked = cellsUnlocked();
+    const inBattle = phase === 'chooseResponse' || phase === 'exchangeFeedback';
+    cells.forEach((cell, i) => {
+      const mark = board[i];
+      cell.textContent = mark || '';
+      cell.className = 'cell' +
+        (mark === 'X' ? ' x' : '') +
+        (mark === 'O' ? ' o' : '') +
+        (inBattle && i === activeCell ? ' active' : '') +
+        (winningLine && winningLine.includes(i) ? ' win-line' : '');
+      cell.disabled = !unlocked || mark !== null;
+      cell.setAttribute('aria-label', 'Square ' + (i + 1) + ', ' +
+        (mark ? mark : 'empty') + (inBattle && i === activeCell ? ', in battle' : ''));
+    });
+
+    instructionsEl.hidden = phase !== 'instructions';
+    battleEl.hidden = phase === 'instructions';
+    if (!battleEl.hidden) {
+      playerHealthEl.textContent = playerHealth;
+      alienHealthEl.textContent = alienHealth;
+      exchangeLabelEl.textContent = 'Exchange ' + (exchange + 1) + ': alien shows';
+      alienMoveEl.textContent = ALIEN_MOVES[exchange];
+    }
+    replyBtns.forEach(btn => {
+      btn.disabled = phase !== 'chooseResponse';
+      btn.classList.toggle('chosen', btn.dataset.reply === chosenReply);
+    });
+    // "Next exchange" only appears when both sides still have health.
+    nextBtn.hidden = !(phase === 'exchangeFeedback' && playerHealth > 0 && alienHealth > 0);
+  }
+
+  replyBtns.forEach(btn => btn.addEventListener('click', () => reply(btn.dataset.reply)));
+  nextBtn.addEventListener('click', nextExchange);
+  restartBtn.addEventListener('click', () => {
+    restartGame();
+    cells[0].focus();
+  });
+
+  restartGame();
+</script>
+</body>
+</html>

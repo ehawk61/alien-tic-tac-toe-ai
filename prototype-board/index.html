@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alien Tic-Tac-Toe: Board Prototype</title>
+<style>
+  :root {
+    --bg: #f4f4f8;
+    --panel: #ffffff;
+    --text: #1a1a2e;
+    --muted: #4a4a5e;
+    --cell: #e6e6f0;
+    --cell-hover: #d6d6e6;
+    --x: #0b6b3a;
+    --o: #a3122b;
+    --accent: #3b2db0;
+    --focus: #f0a000;
+    --temp: #fff3cd;
+    --temp-border: #8a6d00;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 16px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 18px;
+    line-height: 1.4;
+  }
+  main {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 1.5rem; margin: 0 0 8px; }
+  .note { color: var(--muted); font-size: 1rem; margin: 0 0 16px; }
+  #status {
+    background: var(--panel);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 0 0 16px;
+    min-height: 3.2em;
+    font-weight: 600;
+  }
+  #status:focus { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 0 0 16px;
+  }
+  .cell {
+    aspect-ratio: 1;
+    min-height: 44px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: var(--cell);
+    color: var(--text);
+    font-size: 2.5rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .cell:hover:not(:disabled) { background: var(--cell-hover); }
+  .cell:disabled { cursor: not-allowed; }
+  .cell.x { color: var(--x); }
+  .cell.o { color: var(--o); }
+  .cell.active { border-color: var(--accent); background: #dcd8ff; }
+  .cell.win-line { border-color: var(--text); background: #fff; }
+  button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 16px;
+  }
+  .btn {
+    min-height: 44px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .temp {
+    flex: 1 1 140px;
+    background: var(--temp);
+    color: var(--text);
+    border: 2px dashed var(--temp-border);
+  }
+  .main-btn {
+    background: var(--accent);
+    color: #fff;
+    border: 2px solid var(--accent);
+  }
+  .temp-label { font-size: 0.9rem; color: var(--muted); margin: 0 0 6px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Alien Tic-Tac-Toe</h1>
+  <p class="note">Board prototype. Battles are replaced by two temporary test buttons.</p>
+
+  <p id="status" tabindex="-1" aria-live="polite"></p>
+
+  <div class="board" id="board" role="group" aria-label="Game board"></div>
+
+  <p class="temp-label">Temporary test buttons:</p>
+  <div class="controls">
+    <button type="button" class="btn temp" id="test-win">Test battle win</button>
+    <button type="button" class="btn temp" id="test-loss">Test battle loss</button>
+  </div>
+
+  <div class="controls">
+    <button type="button" class="btn main-btn" id="play-again">Play again</button>
+  </div>
+</main>
+
+<script>
+  const LINES = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+  ];
+
+  const boardEl = document.getElementById('board');
+  const statusEl = document.getElementById('status');
+  const winBtn = document.getElementById('test-win');
+  const lossBtn = document.getElementById('test-loss');
+  const playAgainBtn = document.getElementById('play-again');
+
+  // phase: "choose" (pick a cell), "battle" (waiting for one test result), "over" (game finished)
+  let board, phase, activeCell, winningLine;
+
+  const cells = [];
+  for (let i = 0; i < 9; i++) {
+    const cell = document.createElement('button');
+    cell.type = 'button';
+    cell.className = 'cell';
+    cell.addEventListener('click', () => selectCell(i));
+    boardEl.appendChild(cell);
+    cells.push(cell);
+  }
+
+  function reset() {
+    board = Array(9).fill(null);
+    phase = 'choose';
+    activeCell = null;
+    winningLine = null;
+    statusEl.textContent = 'Pick an empty cell to start a battle for it.';
+    render();
+  }
+
+  function selectCell(i) {
+    if (phase !== 'choose' || board[i] !== null) return;
+    phase = 'battle';
+    activeCell = i;
+    statusEl.textContent = 'Battle for cell ' + (i + 1) + '. Board locked. Choose a test result.';
+    render();
+    winBtn.focus();
+  }
+
+  function resolveBattle(mark) {
+    // Only one resolution per battle: ignore any press outside a battle.
+    if (phase !== 'battle') return;
+    const cellNumber = activeCell + 1;
+    board[activeCell] = mark;
+    activeCell = null;
+
+    const result = checkBoard();
+    const battleText = mark === 'X'
+      ? 'You won the battle: X in cell ' + cellNumber + '.'
+      : 'You lost the battle: O in cell ' + cellNumber + '.';
+
+    if (result) {
+      phase = 'over';
+      statusEl.textContent = battleText + ' ' + result;
+    } else {
+      phase = 'choose';
+      statusEl.textContent = battleText + ' Pick another empty cell.';
+    }
+    render();
+    statusEl.focus();
+  }
+
+  function checkBoard() {
+    for (const line of LINES) {
+      const [a, b, c] = line;
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        winningLine = line;
+        return board[a] === 'X' ? 'You win!' : 'You lose.';
+      }
+    }
+    if (board.every(v => v !== null)) return 'Draw.';
+    return null;
+  }
+
+  function render() {
+    cells.forEach((cell, i) => {
+      const mark = board[i];
+      cell.textContent = mark || '';
+      cell.className = 'cell' +
+        (mark === 'X' ? ' x' : '') +
+        (mark === 'O' ? ' o' : '') +
+        (i === activeCell ? ' active' : '') +
+        (winningLine && winningLine.includes(i) ? ' win-line' : '');
+      cell.disabled = phase !== 'choose' || mark !== null;
+      cell.setAttribute('aria-label', 'Cell ' + (i + 1) + ', ' +
+        (mark ? mark : 'empty') + (i === activeCell ? ', in battle' : ''));
+    });
+    const inBattle = phase === 'battle';
+    winBtn.disabled = !inBattle;
+    lossBtn.disabled = !inBattle;
+  }
+
+  winBtn.addEventListener('click', () => resolveBattle('X'));
+  lossBtn.addEventListener('click', () => resolveBattle('O'));
+  playAgainBtn.addEventListener('click', () => {
+    reset();
+    cells[0].focus();
+  });
+
+  reset();
+</script>
+</body>
+</html>

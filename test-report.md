@@ -66,10 +66,10 @@ Run on 2026-10-19 in a headless Chromium browser (Playwright), against the file 
 
 | # | Check | Result | Checked by | Date | Notes |
 |---|---|---|---|---|---|
-| B1 | Double-clicking `prototype-board/index.html` opens it in your browser. | Not tested | | | |
-| B2 | Clicking a cell makes it highlighted and the other cells stop responding. | Not tested | | | |
-| B3 | "Test battle win" puts X in the cell; "Test battle loss" puts O. Pressing again does nothing. | Not tested | | | |
-| B4 | Three X in a row shows "You win!"; three O shows "You lose."; full board with no line shows "Draw." | Not tested | | | |
-| B5 | "Play again" empties the board. | Not tested | | | |
-| B6 | Keyboard only: Tab moves between buttons, Enter or Space presses them, and the orange focus outline is visible. | Not tested | | | |
+| B1 | Double-clicking `prototype-board/index.html` opens it in your browser. | Passed | You (browser) | 2026-10-19 | |
+| B2 | Clicking a cell makes it highlighted and the other cells stop responding. | Passed | You (browser) | 2026-10-19 | |
+| B3 | "Test battle win" puts X in the cell; "Test battle loss" puts O. Pressing again does nothing. | Passed | You (browser) | 2026-10-19 | |
+| B4 | Three X in a row shows "You win!"; three O shows "You lose."; full board with no line shows "Draw." | Passed | You (browser) | 2026-10-19 | |
+| B5 | "Play again" empties the board. | Passed | You (browser) | 2026-10-19 | |
+| B6 | Keyboard only: Tab moves between buttons, Enter or Space presses them, and the orange focus outline is visible. | Passed | You (browser) | 2026-10-19 | |
 | B7 | On a real phone: everything fits and tapping works. | Not tested | | | Optional: needs the file copied to the phone. |
